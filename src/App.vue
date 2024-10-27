@@ -1,6 +1,14 @@
 <template>
-  <router-view/>
+
+  <v-layout class="d-flex flex-column">
+    <Header style="height: 80px; margin-bottom: 10px"/>
+    <router-view/>
+    <Footer/>
+  </v-layout>
+
 </template>
 <script setup lang="ts">
 
+import Header from '@/components/header.vue';
+import Footer from '@/components/Footer.vue';
 </script>

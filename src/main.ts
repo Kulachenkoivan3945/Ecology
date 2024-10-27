@@ -11,7 +11,7 @@ import { router } from '@/router/index';
 
 import '@mdi/font/css/materialdesignicons.css'
 import { aliases, mdi } from 'vuetify/iconsets/mdi'
-
+import '@/assets/css/fonts.css'
 const vuetify = createVuetify({
   components,
   directives,

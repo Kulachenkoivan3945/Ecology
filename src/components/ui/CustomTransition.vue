@@ -17,21 +17,20 @@ import { onMounted, ref, defineProps } from 'vue';
 const props = defineProps<{
   duration: number | string;
   animationType: string;
-}>()
+}>();
 
+const animationDuration = (props.duration ?? 1) + 's';
 const container = ref<Element>(null);
 const animate = ref(false);
 
 const observer = new IntersectionObserver(
   ([entry]) => {
     if (!animate.value) {
-      console.log(entry)
       animate.value = entry.isIntersecting;
     }
-    console.log(12)
   },
   {
-    threshold: 0.5,
+    threshold: 0.7,
   },
 );
 
@@ -41,6 +40,7 @@ onMounted(() => {
 </script>
 <style scoped>
 .animated-component.default-enter-from,
+.animated-component.transitionFade-enter-from,
 .animated-component.transitionLeft-enter-from,
 .animated-component.transitionRight-enter-from {
   transition: none;
@@ -49,7 +49,9 @@ onMounted(() => {
 
 .default-enter-active,
 .default-leave-active {
-  transition: opacity 1.5s ease-in-out, transform 1s ease-in-out;
+  transition-property: opacity, transform;
+  transition-timing-function: ease-in-out;
+  transition-duration: v-bind(animationDuration);
 }
 
 .default-enter-from,
@@ -58,9 +60,23 @@ onMounted(() => {
   transform: scale(0.5) translateY(100%);
 }
 
+.transitionFade-enter-active,
+.transitionFade-leave-active {
+  transition-property: opacity, transform;
+  transition-timing-function: ease-in-out;
+  transition-duration: v-bind(animationDuration);
+}
+
+.transitionFade-enter-from,
+.transitionFade-leave-to {
+  opacity: 0;
+}
+
 .transitionRight-enter-active,
 .transitionRight-leave-active {
-  transition: opacity 1.5s ease-in-out, transform 1s ease-in-out;
+  transition-property: opacity, transform;
+  transition-timing-function: ease-in-out;
+  transition-duration: v-bind(animationDuration);
 }
 
 .transitionRight-enter-from,
@@ -71,7 +87,9 @@ onMounted(() => {
 
 .transitionLeft-enter-active,
 .transitionLeft-leave-active {
-  transition: opacity 1.5s ease-in-out, transform 1s ease-in-out;
+  transition-property: opacity, transform;
+  transition-timing-function: ease-in-out;
+  transition-duration: v-bind(animationDuration);
 }
 
 .transitionLeft-enter-from,
