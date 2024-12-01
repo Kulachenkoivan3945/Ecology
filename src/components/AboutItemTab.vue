@@ -50,8 +50,8 @@
       </v-row>
     </CustomTransition>
 
-    <v-row class=" w-100 justify-center px-3 py-4">
-      <v-col class="d-flex justify-center bg-green-darken-4 rounded-lg">
+    <v-row class="py-4 px-3">
+      <v-col class="w-100 d-flex justify-center bg-green-darken-4 rounded-lg">
         <span class="text-h5">
           {{ contentInfo.timeCost }}
       </span>

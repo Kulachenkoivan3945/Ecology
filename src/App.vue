@@ -16,6 +16,10 @@ import Footer from '@/components/Footer.vue';
 
 <style>
  html{
-   font-size: calc(14px + 0.25vw) !important;
+   font-size: calc(12px + 0.2vw) !important;
+ }
+
+ *{
+   box-sizing: border-box;
  }
 </style>
