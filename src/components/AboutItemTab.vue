@@ -7,6 +7,9 @@
   >
 
     <span class="text-h4 font-weight-bold " style="color: #004240">{{ contentInfo.name }}</span>
+    <br><br>
+    <span class="text-h5 font-weight-bold " style="color: #004240">{{ contentInfo.subtitle }}</span>
+
 
     <CustomTransition :animation-type="TransitionTypes.SLIDE_RIGHT">
       <v-row
@@ -50,7 +53,7 @@
     <v-row class=" w-100 justify-center px-3 py-4">
       <v-col class="d-flex justify-center bg-green-darken-4 rounded-lg">
         <span class="text-h5">
-        От 10000 рублей
+          {{ contentInfo.timeCost }}
       </span>
       </v-col>
     </v-row>
@@ -69,10 +72,12 @@ import { useDisplayState } from '@/stores/displayState';
 const props = defineProps<{
   contentInfo: {
     name: string,
+    subtitle: string,
     description: string,
     purpose: string,
     regulated: string,
     punishment: string,
+    timeCost: string,
   }
 }>();
 
@@ -81,7 +86,6 @@ const { isMobileSMBreakpoint } = storeToRefs(useDisplayState());
 <style scoped>
 
 .bg-gradient-green {
-
   background: radial-gradient(at 46.818714028860356% 23.04760625881672%, hsla(0, 0%, 100%, 1) 0%, hsla(0, 0%, 100%, 0) 100%), radial-gradient(at 5.710285968386941% 50.38061089955435%, hsla(140, 47.05882352941176%, 80%, 1) 0%, hsla(140, 47.05882352941176%, 80%, 0) 100%), radial-gradient(at 56.79298969227218% 74.06939123203769%, hsla(0, 0%, 100%, 1) 0%, hsla(0, 0%, 100%, 0) 100%);
 }
 

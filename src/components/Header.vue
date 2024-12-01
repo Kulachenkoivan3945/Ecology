@@ -19,7 +19,7 @@
         width="40"
         height="40"
       />
-      <span class="px-6 text-h6 text-green-darken-4 font-weight-bold"> Ecology</span>
+      <span class="px-6 text-h6 text-green-darken-4 font-weight-bold"> Экологический аудит</span>
     </v-col>
     <v-col class="flex-grow-0 d-flex align-center">
       <v-menu
@@ -60,13 +60,15 @@
         icon="mdi-phone"
         color="green-darken-4"
         size="40"
+        href="tel:89889653575"
       />
       <v-btn
         icon="mdi-email"
         color="green-darken-4"
         size="40"
+        href="mailto:Lihaceco@yandex.ru"
       />
-      <span class="text-h5 text-green-darken-4 font-weight-bold text-no-wrap">8(800)555-35-35</span>
+      <span class="text-h5 text-green-darken-4 font-weight-bold text-no-wrap">8-988-965-35-75</span>
     </v-col>
   </v-row>
 

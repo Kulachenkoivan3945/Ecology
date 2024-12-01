@@ -9,11 +9,11 @@
           height="40"
         />
         <span class="px-3 text-no-wrap">
-          ООО "Экологический аудит"
+          ИП Лихачев А.А.
         </span>
       </v-col>
       <v-col class="flex-grow-0">
-        <span class="text-h6 text-no-wrap">8(800)555-35-35</span>
+        <span class="text-h6 text-no-wrap">8-988-965-35-75</span>
       </v-col>
     </v-row>
   </v-footer>
