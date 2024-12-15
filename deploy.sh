@@ -23,3 +23,5 @@ git commit -m 'deploy'
 git push -f git@github.com:<kulachenkoivan3945>/<Ecology>.git master:gh-pages
 
 cd -
+
+# deploy - git subtree push --prefix dist origin gh-pages

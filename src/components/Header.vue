@@ -115,10 +115,10 @@
         </RouterLink>
       </v-list-item>
       <v-list-item>
-        <span>Контакты</span>
+        <span @click="goToAnchor('#contactsContainer')">Контакты</span>
       </v-list-item>
       <v-list-item>
-        <span>Запрос</span>
+        <span @click="goToAnchor('#requestContainer', -47)">Запрос</span>
       </v-list-item>
     </v-list>
   </v-navigation-drawer>

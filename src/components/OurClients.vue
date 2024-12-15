@@ -22,7 +22,6 @@
 </template>
 
 <script setup lang="ts">
-import bg from '@/assets/img/contragents-4.jpg';
 import rosneft from '@/assets/img/contragents-logo/rosneft.jpg';
 import rzd from '@/assets/img/contragents-logo/rzd.jpg';
 import rosseti from '@/assets/img/contragents-logo/rosseti.jpg';
