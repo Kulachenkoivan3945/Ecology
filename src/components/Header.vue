@@ -10,7 +10,8 @@
     <v-app-bar-nav-icon variant="text" color="white" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
   </v-toolbar>
 
-  <v-toolbar v-else class="position-fixed"  style="left: 0; top: 0; z-index: 2000; height: 64px; background-color: rgba(255,255,255,0.9); backdrop-filter: blur(5px)">
+  <v-toolbar v-else class="position-fixed"
+             style="left: 0; top: 0; z-index: 2000; height: 64px; background-color: rgba(255,255,255,0.9); backdrop-filter: blur(5px)">
     <v-row
       class="w-100 px-4 justify-space-between"
     >
@@ -30,13 +31,12 @@
           open-on-click
         >
           <template v-slot:activator="{ props }">
-            <div class="d-flex flex-row align-center">
-            <span
-              v-bind="props"
-              class="cursor-pointer text-h6 text-green-darken-4 font-weight-bold"
-            >
-            Услуги
-          </span>
+            <div v-bind="props" class="d-flex flex-row align-center">
+              <span
+                class="cursor-pointer text-h6 text-green-darken-4 font-weight-bold"
+              >
+                Услуги
+              </span>
               <v-icon
                 icon=" mdi-chevron-down"
               />
@@ -56,6 +56,21 @@
           </v-list>
         </v-menu>
       </v-col>
+
+      <v-col class="flex-grow-0 d-flex align-center">
+        <span
+          class="cursor-pointer text-h6 text-green-darken-4 font-weight-bold"
+          @click="goToAnchor('#contactsContainer')"
+        >Контакты</span>
+      </v-col>
+
+      <v-col class="flex-grow-0 d-flex align-center">
+        <span
+          class="cursor-pointer text-h6 text-green-darken-4 font-weight-bold"
+          @click="goToAnchor('#requestContainer')"
+        >Запрос</span>
+      </v-col>
+
       <v-col class="d-flex flex-row align-center justify-end ga-3 flex-grow-0">
         <v-btn
           icon="mdi-phone"
@@ -77,6 +92,7 @@
   <v-navigation-drawer
     v-model="drawer"
     location="left"
+    style="margin-top: 48px"
     temporary
   >
     <v-list>
@@ -84,7 +100,7 @@
         :value="-1"
         class="pa-0"
       >
-        <RouterLink to="/" class=" d-block text-decoration-none text-black w-100 h-100 pa-4">
+        <RouterLink :to="PageLinks.MAIN" class=" d-block text-decoration-none text-black w-100 h-100 pa-4">
           Главная
         </RouterLink>
       </v-list-item>
@@ -98,6 +114,12 @@
           {{ item.name }}
         </RouterLink>
       </v-list-item>
+      <v-list-item>
+        <span>Контакты</span>
+      </v-list-item>
+      <v-list-item>
+        <span>Запрос</span>
+      </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -109,6 +131,7 @@ import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useDisplayState } from '@/stores/displayState';
 import { PageLinks } from '@/enums';
+import { useGoTo } from 'vuetify';
 
 const router = useRouter();
 
@@ -131,10 +154,18 @@ const linksList = [
   },
 ];
 
-const chosenPage = ref('');
 const drawer = ref(false);
 
 const { isMobileBreakpoint } = storeToRefs(useDisplayState());
+const goTo = useGoTo();
+
+const goToAnchor = (container: string, offset?: number): void => {
+  goTo(container, {
+    offset: offset ?? 0,
+    duration: 1000,
+    easing: 'easeInOutCubic',
+  });
+};
 </script>
 
 <style scoped>

@@ -4,6 +4,8 @@
     <Header/>
     <v-main>
       <router-view/>
+      <OurClients/>
+      <SendRequestForm/>
     </v-main>
     <Footer/>
   </v-app>
@@ -13,6 +15,8 @@
 
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
+import OurClients from '@/components/OurClients.vue';
+import SendRequestForm from '@/components/SendRequestForm.vue';
 
 </script>
 
