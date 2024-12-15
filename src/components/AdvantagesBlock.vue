@@ -1,30 +1,37 @@
 <template>
-  <v-row
-    :class="isWidthLgAndUp ? 'flex-row' : 'flex-column'"
-    class="d-flex flex-row align-center justify-center py-8 w-100"
+  <v-container
+    class="d-flex flex-column align-center justify-center py-8 w-100"
   >
     <span class="text-h4 text-center pb-4 w-100">Почему выбирают нас?</span>
-    <CustomTransition
-      v-for="(plus, index) in pluses"
-      :style="{width: isWidthLgAndUp  ? '40% !important' : '90% !important' }"
-      :duration="(index+1)/3 < 1 ? 1 : (index+1)/3"
-      :animation-type="index % 2 === 0 ? TransitionTypes.SLIDE_LEFT : TransitionTypes.SLIDE_RIGHT"
+    <v-container
+      class="d-flex flex-row flex-wrap align-center justify-center ma-0"
     >
-      <v-row class="justify-space-between flex-column mx-auto">
-        <v-col class="d-flex align-center justify-start pb-0 mt-4">
-          <v-icon
-            icon="mdi-check"
-            size="60"
-            color="green-darken-4"
-          />
-          <span class="text-h5 mx-4">{{ plus.title }}</span>
-        </v-col>
-        <v-col>
-          <span class="text-medium-emphasis">{{ plus.description }}</span>
-        </v-col>
+      <v-row
+        v-for="(plus, index) in pluses"
+        :style="{width: isWidthLgAndUp  ? '40% !important' : '90% !important' }"
+        class="flex-row ma-0"
+      >
+        <CustomTransition
+          :duration="1"
+          :animation-type="index % 2 === 0 ? TransitionTypes.SLIDE_LEFT : TransitionTypes.SLIDE_RIGHT"
+        >
+          <v-row class="justify-space-between flex-column mx-auto">
+            <v-col class="d-flex align-center justify-start pb-0 mt-4">
+              <v-icon
+                icon="mdi-check"
+                size="60"
+                color="green-darken-4"
+              />
+              <span class="text-h5 mx-4">{{ plus.title }}</span>
+            </v-col>
+            <v-col>
+              <span class="text-medium-emphasis">{{ plus.description }}</span>
+            </v-col>
+          </v-row>
+        </CustomTransition>
       </v-row>
-    </CustomTransition>
-  </v-row>
+    </v-container>
+  </v-container>
 </template>
 
 <script setup lang="ts">

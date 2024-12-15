@@ -1,10 +1,12 @@
 <template>
 
-  <v-layout class="d-flex flex-column">
-    <Header style="height: 80px; margin-bottom: 10px"/>
-    <router-view/>
+  <v-app class="d-flex flex-column">
+    <Header/>
+    <v-main>
+      <router-view/>
+    </v-main>
     <Footer/>
-  </v-layout>
+  </v-app>
 
 </template>
 <script setup lang="ts">
@@ -15,11 +17,11 @@ import Footer from '@/components/Footer.vue';
 </script>
 
 <style>
- html{
-   font-size: calc(12px + 0.2vw) !important;
- }
+html {
+  font-size: calc(12px + 0.2vw) !important;
+}
 
- *{
-   box-sizing: border-box;
- }
+* {
+  box-sizing: border-box;
+}
 </style>

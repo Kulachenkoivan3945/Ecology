@@ -1,13 +1,26 @@
-import { createMemoryHistory, createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 
 import HomeView from '@/views/HomeView.vue'
 import AirView from '@/views/AirView.vue'
+import WastesView from '@/views/WastesView.vue'
+import OtherView from '@/views/OtherView.vue'
+import ReportingView from '@/views/ReportingView.vue'
+import { PageLinks } from '@/enums';
 const routes = [
   {
-    path: '/', component: HomeView
+    path: PageLinks.MAIN, component: HomeView
   },
   {
-    path: '/air', component: AirView
+    path: PageLinks.AIR, component: AirView
+  },
+  {
+    path: PageLinks.WASTES, component: WastesView
+  },
+  {
+    path: PageLinks.OTHER, component: OtherView
+  },
+  {
+    path: PageLinks.REPORT, component: ReportingView
   },
 ]
 

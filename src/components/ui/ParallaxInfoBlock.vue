@@ -1,12 +1,13 @@
 <template>
   <v-parallax
     :src="parallaxImage"
-    style="width: 100vw; height: 100vh;"
+    style="width: 100vw; height: 102vh;"
   >
     <CustomTransition :animation-type="transitionType">
       <v-row
         :style="{width: isMobileXSBreakpoint ? '95vw' : '70vw'}"
-        class="flex-column fill-height justify-center align-center text-white mx-auto"
+        :class="[textColor ?? 'text-white']"
+        class="flex-column fill-height justify-center align-center mx-auto"
         no-gutters
       >
         <v-col v-if="logoImage" class="flex-grow-0 d-flex justify-center">
@@ -17,12 +18,12 @@
             max-height="100"
           />
         </v-col>
-        <v-col class="flex-grow-0 d-flex flex-column">
+        <v-col :class="bluredBg ? 'blured-bg pa-8' : ''" class="flex-grow-0 d-flex flex-column">
           <span class="text-h3 font-weight-bold mb-4 text-center py-4">
             {{ title }}
           </span>
           <span class="text-center py-8 text-h5">
-            {{subTitle}}
+            {{ subTitle }}
           </span>
         </v-col>
       </v-row>
@@ -31,7 +32,7 @@
 </template>
 <script setup lang="ts">
 
-import CustomTransition from '@/components/ui/CustomTransition.vue'
+import CustomTransition from '@/components/ui/CustomTransition.vue';
 import { defineProps } from 'vue';
 import { TransitionTypes } from '@/enums';
 import { storeToRefs } from 'pinia';
@@ -43,7 +44,16 @@ const props = defineProps<{
   logoImage?: string;
   title?: string;
   subTitle?: string;
-}>()
+  textColor?: string
+  bluredBg?: boolean
+}>();
 
-const {isMobileXSBreakpoint} = storeToRefs(useDisplayState())
+const { isMobileXSBreakpoint } = storeToRefs(useDisplayState());
 </script>
+
+<style scoped>
+.blured-bg {
+  backdrop-filter: blur(2px);
+  border-radius: 25%;
+}
+</style>

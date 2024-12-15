@@ -50,13 +50,15 @@
       </v-row>
     </CustomTransition>
 
-    <v-row class="py-4 px-3">
-      <v-col class="w-100 d-flex justify-center bg-green-darken-4 rounded-lg">
-        <span class="text-h5">
+    <CustomTransition :animation-type="TransitionTypes.SLIDE_LEFT">
+      <v-row class="py-4 px-3">
+        <v-col class="w-100 d-flex justify-center bg-green-darken-4 rounded-lg">
+        <span class="text-h5 text-pre-line">
           {{ contentInfo.timeCost }}
       </span>
-      </v-col>
-    </v-row>
+        </v-col>
+      </v-row>
+    </CustomTransition>
   </v-card>
 </template>
 

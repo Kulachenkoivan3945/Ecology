@@ -32,26 +32,16 @@
         </v-tabs>
 
         <v-tabs-window v-model="currentTab">
-          <v-tabs-window-item :value="TabsNames.SANITARY">
-            <AboutItemTab
-              :content-info="tabsContent[TabsNames.SANITARY]"
-            />
-          </v-tabs-window-item>
-          <v-tabs-window-item :value="TabsNames.EJECTION">
-            <AboutItemTab
-              :content-info="tabsContent[TabsNames.EJECTION]"
-            />
-          </v-tabs-window-item>
-          <v-tabs-window-item :value="TabsNames.METEOROLOGICAL">
-            <AboutItemTab
-              :content-info="tabsContent[TabsNames.METEOROLOGICAL]"
-            />
-          </v-tabs-window-item>
-          <v-tabs-window-item :value="TabsNames.INVENTORY">
-            <AboutItemTab
-              :content-info="tabsContent[TabsNames.INVENTORY]"
-            />
-          </v-tabs-window-item>
+          <v-tabs-window v-model="currentTab">
+            <v-tabs-window-item
+              v-for="tab in tabs"
+              :value="tab.id"
+            >
+              <AboutItemTab
+                :content-info="tabsContent[tab.id]"
+              />
+            </v-tabs-window-item>
+          </v-tabs-window>
         </v-tabs-window>
       </v-parallax>
     </v-row>
@@ -179,6 +169,8 @@ const tabsContent = {
 для должностных лиц от 40 000 до 50 000 рублей;
 для юридических лиц от 180 000 до 250 000 рублей.
 `,
+    timeCost: `Срок разработки от 5 дней
+Стоимость за источник выбросов от 3 000 ₽`,
   },
   [TabsNames.METEOROLOGICAL]: {
     name: 'План НМУ',
@@ -198,8 +190,8 @@ const tabsContent = {
 для граждан - штраф в размере от 1000 до 2000 рублей;
 для должностных лиц от 2000 до 5 000 рублей;
 для юридических лиц от 20 000 до 100 000 рублей.`,
-    timeCost: `Срок разработки от 5 дней
-Стоимость за источник выбросов от 3 000 ₽`,
+    timeCost: `Срок разработки от 10 дней
+Стоимость от 22 000 ₽`,
   },
 };
 
