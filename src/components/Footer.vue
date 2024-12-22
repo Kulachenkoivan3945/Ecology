@@ -57,7 +57,7 @@
         </v-row>
         <v-row class="flex-column pb-8">
           <v-col class="py-1">
-            <span>Адрес: Волгоград  Краснознаменская улица, 5А, </span>
+            <span>Адрес: Волгоград, Краснознаменская улица, 5А, </span>
           </v-col>
           <v-col class="py-1">
             <span>ИП Лихачев А.А.</span>

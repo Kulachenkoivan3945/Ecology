@@ -18,7 +18,11 @@
             max-height="100"
           />
         </v-col>
-        <v-col :class="bluredBg ? 'blured-bg pa-8' : ''" class="flex-grow-0 d-flex flex-column">
+        <v-col
+          :class="bluredBg ? 'blured-bg pa-8' : ''"
+          class="flex-grow-0 d-flex flex-column"
+          style="text-shadow: black 2px 2px 10px"
+        >
           <span class="text-h3 font-weight-bold mb-4 text-center py-4">
             {{ title }}
           </span>
