@@ -1,50 +1,48 @@
 <template>
-  <DefaultPageContent>
-    <ParallaxInfoBlock
-      :parallax-image="air"
-      :transition-type="TransitionTypes.SLIDE_RIGHT"
-      :blured-bg="true"
-      title="Иное"
-      sub-title="Подготовка и согласование прочей природоохранной документаци"
-    />
-    <v-row class="flex-column w-100 w-100">
-      <v-parallax
-        height="min-content"
-        width="100vw"
-        :src="aboutBg"
+  <ParallaxInfoBlock
+    :parallax-image="air"
+    :transition-type="TransitionTypes.SLIDE_RIGHT"
+    :blured-bg="true"
+    title="ПЭК"
+    sub-title="Подготовка и согласование программы производственного экологического контроля"
+  />
+  <v-row class="flex-column w-100 w-100">
+    <v-parallax
+      height="min-content"
+      width="100vw"
+      :src="aboutBg"
+    >
+      <v-tabs
+        v-model="currentTab"
+        align-tabs="center"
+        slider-color="#1B5E20"
+        selected-class="selected-tab-green"
+        class="rounded-lg w-100 px-4"
+        center-active
+        mandatory
+        show-arrows
       >
-        <v-tabs
-          v-model="currentTab"
-          align-tabs="center"
-          slider-color="#1B5E20"
-          selected-class="selected-tab-green"
-          class="rounded-lg w-100 px-4"
-          center-active
-          mandatory
-          show-arrows
+        <v-tab
+          v-for="tab in tabs"
+          :value="tab.id"
+          style="background-color: rgba(255,255,255,0.8); backdrop-filter: blur(5px)"
         >
-          <v-tab
-            v-for="tab in tabs"
-            :value="tab.id"
-            style="background-color: rgba(255,255,255,0.8); backdrop-filter: blur(5px)"
-          >
-            {{ tab.title }}
-          </v-tab>
-        </v-tabs>
+          {{ tab.title }}
+        </v-tab>
+      </v-tabs>
 
-        <v-tabs-window v-model="currentTab">
-          <v-tabs-window-item
-            v-for="tab in tabs"
-            :value="tab.id"
-          >
-            <AboutItemTab
-              :content-info="tabsContent[tab.id]"
-            />
-          </v-tabs-window-item>
-        </v-tabs-window>
-      </v-parallax>
-    </v-row>
-  </DefaultPageContent>
+      <v-tabs-window v-model="currentTab">
+        <v-tabs-window-item
+          v-for="tab in tabs"
+          :value="tab.id"
+        >
+          <AboutItemTab
+            :content-info="tabsContent[tab.id]"
+          />
+        </v-tabs-window-item>
+      </v-tabs-window>
+    </v-parallax>
+  </v-row>
 </template>
 
 <script setup lang="ts">
@@ -52,14 +50,15 @@ import air from '@/assets/img/other-1.jpg';
 import aboutBg from '@/assets/img/aboutBg2.jpg';
 
 import { storeToRefs } from 'pinia';
-import { TransitionTypes } from '@/enums';
+import { TransitionTypes, WorkProcessTypes } from '@/enums';
 import { useDisplayState } from '@/stores/displayState';
 import { onMounted, ref } from 'vue';
 import AboutItemTab from '@/components/AboutItemTab.vue';
 import ParallaxInfoBlock from '@/components/ui/ParallaxInfoBlock.vue';
-import DefaultPageContent from '@/components/ui/DefaultPageContent.vue';
+import { useCardsStore } from '@/stores/cardsStore';
 
 const { isWidthLgAndUp, isMobileXSBreakpoint, isMobileBreakpoint, isMobileSMBreakpoint } = storeToRefs(useDisplayState());
+const { currentWorkCard } = storeToRefs(useCardsStore());
 
 const enum TabsNames {
   CONTROL = 'control',
@@ -75,7 +74,7 @@ const tabs = [
 
 const tabsContent = {
   [TabsNames.CONTROL]: {
-    name: 'Программа Производственного экологического контроля (ПЭК)',
+    name: 'Программа производственного экологического контроля (ПЭК)',
     purpose: `Производственный экологический контроль (ПЭК) — один из ключевых видов контроля, поскольку предприятия могут серьёзно влиять на окружающую среду. Чтобы отслеживать и фиксировать негативное воздействие объекта на природу, нужно контролировать деятельность предприятия. ПЭК проводят сами природопользователи.
 
 Природоохранное законодательство требует наличия программы ПЭК и результатов проведения ПЭК. Это проверяют надзорные органы во время инспекций.
@@ -111,6 +110,7 @@ onMounted(() => {
     top: 0,
     behavior: 'smooth',
   });
+  currentWorkCard.value = WorkProcessTypes.PEK;
 });
 </script>
 

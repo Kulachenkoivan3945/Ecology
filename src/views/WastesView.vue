@@ -1,52 +1,48 @@
 <template>
-  <DefaultPageContent>
-    <ParallaxInfoBlock
-      :parallax-image="garbage"
-      :transition-type="TransitionTypes.SLIDE_RIGHT"
-      :blured-bg="true"
-      title="Отходы"
-      sub-title="Подготовка и согласование природоохранной документации по отходам производства и потребления"
-    />
-    <v-row class="flex-column w-100 w-100">
-      <v-parallax
-        height="min-content"
-        width="100vw"
-        :src="aboutBg"
+  <ParallaxInfoBlock
+    :parallax-image="garbage"
+    :transition-type="TransitionTypes.SLIDE_RIGHT"
+    :blured-bg="true"
+    title="Отходы"
+    sub-title="Подготовка и согласование природоохранной документации по отходам производства и потребления"
+  />
+  <v-row class="flex-column w-100 w-100">
+    <v-parallax
+      height="min-content"
+      width="100vw"
+      :src="aboutBg"
+    >
+      <v-tabs
+        v-model="currentTab"
+        align-tabs="center"
+        slider-color="#1B5E20"
+        selected-class="selected-tab-green"
+        class="rounded-lg w-100 px-4"
+        center-active
+        mandatory
+        show-arrows
       >
-        <v-tabs
-          v-model="currentTab"
-          align-tabs="center"
-          slider-color="#1B5E20"
-          selected-class="selected-tab-green"
-          class="rounded-lg w-100 px-4"
-          center-active
-          mandatory
-          show-arrows
+        <v-tab
+          v-for="tab in tabs"
+          :value="tab.id"
+          style="background-color: rgba(255,255,255,0.8); backdrop-filter: blur(5px)"
         >
-          <v-tab
-            v-for="tab in tabs"
-            :value="tab.id"
-            style="background-color: rgba(255,255,255,0.8); backdrop-filter: blur(5px)"
-          >
-            {{ tab.title }}
-          </v-tab>
-        </v-tabs>
+          {{ tab.title }}
+        </v-tab>
+      </v-tabs>
 
-        <v-tabs-window v-model="currentTab">
-          <v-tabs-window v-model="currentTab">
-            <v-tabs-window-item
-              v-for="tab in tabs"
-              :value="tab.id"
-            >
-              <AboutItemTab
-                :content-info="tabsContent[tab.id]"
-              />
-            </v-tabs-window-item>
-          </v-tabs-window>
-        </v-tabs-window>
-      </v-parallax>
-    </v-row>
-  </DefaultPageContent>
+      <v-tabs-window v-model="currentTab">
+        <v-tabs-window-item
+          v-for="tab in tabs"
+          :value="tab.id"
+        >
+          <AboutItemTab
+            :content-info="tabsContent[tab.id]"
+          />
+        </v-tabs-window-item>
+      </v-tabs-window>
+    </v-parallax>
+  </v-row>
 </template>
 
 <script setup lang="ts">
@@ -54,14 +50,15 @@ import garbage from '@/assets/img/wastes-2.jpg';
 import aboutBg from '@/assets/img/aboutBg2.jpg';
 
 import { storeToRefs } from 'pinia';
-import { TransitionTypes } from '@/enums';
+import { TransitionTypes, WorkProcessTypes } from '@/enums';
 import { useDisplayState } from '@/stores/displayState';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import AboutItemTab from '@/components/AboutItemTab.vue';
 import ParallaxInfoBlock from '@/components/ui/ParallaxInfoBlock.vue';
-import DefaultPageContent from '@/components/ui/DefaultPageContent.vue';
+import { useCardsStore } from '@/stores/cardsStore';
 
 const { isWidthLgAndUp, isMobileXSBreakpoint, isMobileBreakpoint, isMobileSMBreakpoint } = storeToRefs(useDisplayState());
+const { currentWorkCard } = storeToRefs(useCardsStore());
 
 const enum TabsNames {
   LIMITS = 'limits',
@@ -105,8 +102,7 @@ const tabsContent = {
     timeCost: `Срок разработки от 10 дней. Стоимость от 18 000 ₽`,
   },
   [TabsNames.PASSPORTS]: {
-    name: 'Проект опасных отходов',
-    /*    subtitle: `Разработка проекта нормативов предельно допустимых выбросов загрязняющих веществ в атмосферу — проект ПДВ от 30 000 ₽`,*/
+    name: 'Разработка паспорта отходов',
     description: 'Проект санитарно-защитной зоны (СЗЗ) и санитарного разрыва — это комплекс мероприятий, направленных на обеспечение безопасности населения и окружающей среды от негативного воздействия промышленных объектов, транспортных магистралей, коммунальных сооружений и других источников загрязнения.',
     purpose: `В зависимости от того, насколько отходы вредны и как сильно они влияют на окружающую среду, природу и здоровье людей, отходы производственного цикла любого предприятия делят на классы.
 
@@ -134,7 +130,7 @@ const tabsContent = {
 Стоимость от 5000 ₽`,
   },
   [TabsNames.INVENTORY]: {
-    name: 'Инвентаризация отходов производства и потреблени',
+    name: 'Инвентаризация отходов производства и потребления',
     subtitle: `Проведение инвентаризации отходов производства и потреблени`,
     description: 'Проект санитарно-защитной зоны (СЗЗ) и санитарного разрыва — это комплекс мероприятий, направленных на обеспечение безопасности населения и окружающей среды от негативного воздействия промышленных объектов, транспортных магистралей, коммунальных сооружений и других источников загрязнения.',
     purpose: `Чтобы определить, какие отходы образуются на производстве и как с ними обращаться, нужно провести инвентаризацию. Она включает в себя выявление источников отходов и определение их класса опасности.
@@ -160,11 +156,19 @@ const tabsContent = {
   },
 };
 
+watch(currentTab, () => {
+  if (currentTab.value === TabsNames.PASSPORTS) {
+    currentWorkCard.value = WorkProcessTypes.WASTES_PASSPORTS;
+  } else {
+    currentWorkCard.value = WorkProcessTypes.WASTES;
+  }
+});
 onMounted(() => {
   window.scrollTo({
     top: 0,
     behavior: 'smooth',
   });
+  currentWorkCard.value =  WorkProcessTypes.WASTES;
 });
 </script>
 

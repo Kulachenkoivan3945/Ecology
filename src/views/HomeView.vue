@@ -1,5 +1,4 @@
 <template>
-<DefaultPageContent>
   <ParallaxInfoBlock
     :parallax-image="bg"
     :logo-image="logo"
@@ -18,7 +17,7 @@
           :animation-type="TransitionTypes.SLIDE_LEFT"
           :duration="isWidthLgAndUp ? (cards.length - index)/2 : 1"
         >
-          <v-hover v-slot="{ isHovering, props }">
+          <v-hover v-slot="{ isHovering, props }" >
             <v-card
               v-bind="props"
               class="d-flex flex-column rounded-lg"
@@ -37,11 +36,12 @@
 
               <v-overlay
                 :model-value="!!isHovering"
-                class="align-center justify-center"
+                class="align-center justify-center cursor-pointer"
                 scrim="#036358"
                 contained
+                @click="goToPage(card.link)"
               >
-                <v-btn variant="flat" @click="goToPage(card.link)">Узнать больше</v-btn>
+                <v-btn variant="flat">Узнать больше</v-btn>
               </v-overlay>
             </v-card>
           </v-hover>
@@ -50,7 +50,6 @@
       </v-col>
     </v-row>
   </v-row>
-</DefaultPageContent>
 </template>
 
 <script setup lang="ts">
@@ -60,21 +59,29 @@ import bg from '@/assets/img/bg-2.jpg';
 
 import CustomTransition from '@/components/ui/CustomTransition.vue';
 import { storeToRefs } from 'pinia';
-import { useCardsStore } from '@/stores/cards';
-import { TransitionTypes } from '@/enums';
+import { useCardsStore } from '@/stores/cardsStore';
+import { TransitionTypes, WorkProcessTypes } from '@/enums';
 
 import { useDisplayState } from '@/stores/displayState';
 import { useRouter } from 'vue-router';
 import ParallaxInfoBlock from '@/components/ui/ParallaxInfoBlock.vue';
-import DefaultPageContent from '@/components/ui/DefaultPageContent.vue';
+import { onMounted } from 'vue';
 
 const router = useRouter();
 const { cards } = storeToRefs(useCardsStore());
 const { isWidthLgAndUp, isMobileXSBreakpoint, isMobileBreakpoint, isMobileSMBreakpoint } = storeToRefs(useDisplayState());
-
+const { currentWorkCard } = storeToRefs(useCardsStore());
 const goToPage = (link: string): void => {
   router.push(link);
 };
+
+onMounted(() => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
+  currentWorkCard.value = WorkProcessTypes.AIR;
+});
 </script>
 
 <style scoped>

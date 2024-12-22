@@ -26,7 +26,7 @@
                 >
                   {{ title }}
                 </span>
-                <span :class="isMobileXSBreakpoint ? 'text-body-2' : 'text-body-1'">
+                <span :class="isMobileXSBreakpoint ? 'text-body-2' : 'text-body-1'" class="text-pre-wrap">
                  {{ descriptions?.[index] }}
                 </span>
               </v-col>

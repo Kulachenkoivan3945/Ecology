@@ -1,51 +1,49 @@
 <template>
-  <DefaultPageContent>
-    <ParallaxInfoBlock
-      :parallax-image="air"
-      :transition-type="TransitionTypes.SLIDE_RIGHT"
-      title="Воздух"
-      sub-title="Разработка и согласование проектов по охране атмосферного воздуха"
-    />
-    <v-row class="flex-column w-100 w-100">
-      <v-parallax
-        height="min-content"
-        width="100vw"
-        :src="aboutBg"
+  <ParallaxInfoBlock
+    :parallax-image="air"
+    :transition-type="TransitionTypes.SLIDE_RIGHT"
+    title="Воздух"
+    sub-title="Разработка и согласование проектов по охране атмосферного воздуха"
+  />
+  <v-row class="flex-column w-100 w-100">
+    <v-parallax
+      height="min-content"
+      width="100vw"
+      :src="aboutBg"
+    >
+      <v-tabs
+        v-model="currentTab"
+        align-tabs="center"
+        slider-color="#1B5E20"
+        selected-class="selected-tab-green"
+        class="rounded-lg w-100 px-4"
+        center-active
+        mandatory
+        show-arrows
       >
-        <v-tabs
-          v-model="currentTab"
-          align-tabs="center"
-          slider-color="#1B5E20"
-          selected-class="selected-tab-green"
-          class="rounded-lg w-100 px-4"
-          center-active
-          mandatory
-          show-arrows
+        <v-tab
+          v-for="tab in tabs"
+          :value="tab.id"
+          style="background-color: rgba(255,255,255,0.8); backdrop-filter: blur(5px)"
         >
-          <v-tab
+          {{ tab.title }}
+        </v-tab>
+      </v-tabs>
+
+      <v-tabs-window v-model="currentTab">
+        <v-tabs-window v-model="currentTab">
+          <v-tabs-window-item
             v-for="tab in tabs"
             :value="tab.id"
-            style="background-color: rgba(255,255,255,0.8); backdrop-filter: blur(5px)"
           >
-            {{ tab.title }}
-          </v-tab>
-        </v-tabs>
-
-        <v-tabs-window v-model="currentTab">
-          <v-tabs-window v-model="currentTab">
-            <v-tabs-window-item
-              v-for="tab in tabs"
-              :value="tab.id"
-            >
-              <AboutItemTab
-                :content-info="tabsContent[tab.id]"
-              />
-            </v-tabs-window-item>
-          </v-tabs-window>
+            <AboutItemTab
+              :content-info="tabsContent[tab.id]"
+            />
+          </v-tabs-window-item>
         </v-tabs-window>
-      </v-parallax>
-    </v-row>
-  </DefaultPageContent>
+      </v-tabs-window>
+    </v-parallax>
+  </v-row>
 </template>
 
 <script setup lang="ts">
@@ -53,14 +51,15 @@ import air from '@/assets/img/air2.jpg';
 import aboutBg from '@/assets/img/aboutBg2.jpg';
 
 import { storeToRefs } from 'pinia';
-import { TransitionTypes } from '@/enums';
+import { TransitionTypes, WorkProcessTypes } from '@/enums';
 import { useDisplayState } from '@/stores/displayState';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import AboutItemTab from '@/components/AboutItemTab.vue';
 import ParallaxInfoBlock from '@/components/ui/ParallaxInfoBlock.vue';
-import DefaultPageContent from '@/components/ui/DefaultPageContent.vue';
+import { useCardsStore } from '@/stores/cardsStore';
 
 const { isWidthLgAndUp, isMobileXSBreakpoint, isMobileBreakpoint, isMobileSMBreakpoint } = storeToRefs(useDisplayState());
+const { currentWorkCard } = storeToRefs(useCardsStore());
 
 const enum TabsNames {
   SANITARY = 'sanitary',
@@ -69,23 +68,23 @@ const enum TabsNames {
   METEOROLOGICAL = 'meteorological',
 }
 
-const currentTab = ref(TabsNames.SANITARY);
+const currentTab = ref(TabsNames.EJECTION);
 const tabs = [
-  {
-    title: 'СЗЗ',
-    id: TabsNames.SANITARY,
-  },
   {
     title: 'НДВ, ПДВ',
     id: TabsNames.EJECTION,
+  },
+  {
+    title: 'Инвентаризация выбросов',
+    id: TabsNames.INVENTORY,
   },
   {
     title: 'НМУ',
     id: TabsNames.METEOROLOGICAL,
   },
   {
-    title: 'Инвентаризация выбросов',
-    id: TabsNames.INVENTORY,
+    title: 'СЗЗ',
+    id: TabsNames.SANITARY,
   },
 ];
 
@@ -147,8 +146,7 @@ const tabsContent = {
     timeCost: `Срок разработки от 10 дней. Стоимость за источник выбросов от 2 000 ₽`,
   },
   [TabsNames.INVENTORY]: {
-    name: 'Проект санитароно-защитной зоны и санитарного разрыва',
-    subtitle: `Проведение инвентаризации источников и выбросов загрязняющих веществ в атмосферный воздух`,
+    name: 'Проведение инвентаризации источников и выбросов загрязняющих веществ в атмосферный воздух',
     description: 'Проект санитарно-защитной зоны (СЗЗ) и санитарного разрыва — это комплекс мероприятий, направленных на обеспечение безопасности населения и окружающей среды от негативного воздействия промышленных объектов, транспортных магистралей, коммунальных сооружений и других источников загрязнения.',
     purpose: `Инвентаризация источников выбросов (ИЗАВ) — процедура выявления на территории предприятия (объекта НВОС) источников выбросов загрязняющих веществ (ЗВ) в атмосферных воздух и документирование показателей таких источников, количества выбрасываемых загрязняющих веществ и степени воздействия выбросов на ближайшую жилую застройку. На основании данных, полученных в результате инвентаризации ИЗАВ, составляется отчет в порядке, утвержденном законодательством Российской Федерации.
 
@@ -195,11 +193,21 @@ const tabsContent = {
   },
 };
 
+watch(currentTab, () => {
+  if (currentTab.value === TabsNames.METEOROLOGICAL) {
+    currentWorkCard.value = WorkProcessTypes.WEATHER_CONDITIONS;
+  } else if (currentTab.value === TabsNames.INVENTORY) {
+    currentWorkCard.value = WorkProcessTypes.EMISSIONS_INVENTORY;
+  } else {
+    currentWorkCard.value = WorkProcessTypes.AIR;
+  }
+});
 onMounted(() => {
   window.scrollTo({
     top: 0,
     behavior: 'smooth',
   });
+  currentWorkCard.value = WorkProcessTypes.WASTES;
 });
 </script>
 

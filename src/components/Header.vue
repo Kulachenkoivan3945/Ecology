@@ -145,7 +145,7 @@ const linksList = [
     link: PageLinks.WASTES,
   },
   {
-    name: 'Иное',
+    name: 'ПЭК',
     link: PageLinks.OTHER,
   },
   {

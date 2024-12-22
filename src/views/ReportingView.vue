@@ -1,52 +1,50 @@
 <template>
-  <DefaultPageContent>
-    <ParallaxInfoBlock
-      :parallax-image="report"
-      :transition-type="TransitionTypes.SLIDE_RIGHT"
-      :blured-bg="true"
-      title="Отчетность"
-      sub-title="Разработка и согласование природоохранной отчетности в установленный срок"
-    />
-    <v-row class="flex-column w-100 w-100">
-      <v-parallax
-        height="min-content"
-        width="100vw"
-        :src="aboutBg"
+  <ParallaxInfoBlock
+    :parallax-image="report"
+    :transition-type="TransitionTypes.SLIDE_RIGHT"
+    :blured-bg="true"
+    title="Отчетность"
+    sub-title="Разработка и согласование природоохранной отчетности в установленный срок"
+  />
+  <v-row class="flex-column w-100 w-100">
+    <v-parallax
+      height="min-content"
+      width="100vw"
+      :src="aboutBg"
+    >
+      <v-tabs
+        v-model="currentTab"
+        align-tabs="center"
+        slider-color="#1B5E20"
+        selected-class="selected-tab-green"
+        class="rounded-lg w-100 px-4"
+        center-active
+        mandatory
+        show-arrows
       >
-        <v-tabs
-          v-model="currentTab"
-          align-tabs="center"
-          slider-color="#1B5E20"
-          selected-class="selected-tab-green"
-          class="rounded-lg w-100 px-4"
-          center-active
-          mandatory
-          show-arrows
+        <v-tab
+          v-for="tab in tabs"
+          :value="tab.id"
+          style="background-color: rgba(255,255,255,0.8); backdrop-filter: blur(5px)"
         >
-          <v-tab
+          {{ tab.title }}
+        </v-tab>
+      </v-tabs>
+
+      <v-tabs-window v-model="currentTab">
+        <v-tabs-window v-model="currentTab">
+          <v-tabs-window-item
             v-for="tab in tabs"
             :value="tab.id"
-            style="background-color: rgba(255,255,255,0.8); backdrop-filter: blur(5px)"
           >
-            {{ tab.title }}
-          </v-tab>
-        </v-tabs>
-
-        <v-tabs-window v-model="currentTab">
-          <v-tabs-window v-model="currentTab">
-            <v-tabs-window-item
-              v-for="tab in tabs"
-              :value="tab.id"
-            >
-              <AboutItemTab
-                :content-info="tabsContent[tab.id]"
-              />
-            </v-tabs-window-item>
-          </v-tabs-window>
+            <AboutItemTab
+              :content-info="tabsContent[tab.id]"
+            />
+          </v-tabs-window-item>
         </v-tabs-window>
-      </v-parallax>
-    </v-row>
-  </DefaultPageContent>
+      </v-tabs-window>
+    </v-parallax>
+  </v-row>
 </template>
 
 <script setup lang="ts">
@@ -54,14 +52,15 @@ import report from '@/assets/img/report-2.jpg';
 import aboutBg from '@/assets/img/aboutBg2.jpg';
 
 import { storeToRefs } from 'pinia';
-import { TransitionTypes } from '@/enums';
+import { TransitionTypes, WorkProcessTypes } from '@/enums';
 import { useDisplayState } from '@/stores/displayState';
 import { onMounted, ref } from 'vue';
 import AboutItemTab from '@/components/AboutItemTab.vue';
 import ParallaxInfoBlock from '@/components/ui/ParallaxInfoBlock.vue';
-import DefaultPageContent from '@/components/ui/DefaultPageContent.vue';
+import { useCardsStore } from '@/stores/cardsStore';
 
 const { isWidthLgAndUp, isMobileXSBreakpoint, isMobileBreakpoint, isMobileSMBreakpoint } = storeToRefs(useDisplayState());
+const { currentWorkCard } = storeToRefs(useCardsStore());
 
 const enum TabsNames {
   N4_OC = 'n4_oc',
@@ -265,6 +264,7 @@ onMounted(() => {
     top: 0,
     behavior: 'smooth',
   });
+  currentWorkCard.value = undefined;
 });
 </script>
 

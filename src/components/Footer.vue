@@ -30,6 +30,11 @@
               style="color: unset"
               class="text-green-darken-4"
             > +7-988-965-35-75</a>
+            <a
+              href="tel:+79880147664"
+              style="color: unset"
+              class="text-green-darken-4"
+            > +7-988-014-76-64</a>
             <span class="text-no-wrap">
               С 8:00 до 20-00 24/7
             </span>
@@ -106,7 +111,7 @@ const linksList = [
     link: PageLinks.WASTES,
   },
   {
-    name: 'Иное',
+    name: 'ПЭК',
     link: PageLinks.OTHER,
   },
   {

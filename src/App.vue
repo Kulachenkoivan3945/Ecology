@@ -3,7 +3,9 @@
   <v-app class="d-flex flex-column">
     <Header/>
     <v-main>
-      <router-view/>
+      <DefaultPageContent>
+        <router-view/>
+      </DefaultPageContent>
       <OurClients/>
       <SendRequestForm/>
     </v-main>
@@ -17,6 +19,7 @@ import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 import OurClients from '@/components/OurClients.vue';
 import SendRequestForm from '@/components/SendRequestForm.vue';
+import DefaultPageContent from '@/components/ui/DefaultPageContent.vue';
 
 </script>
 

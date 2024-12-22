@@ -20,3 +20,18 @@ export const enum PageLinks {
   OTHER = '/other',
   REPORT = '/report'
 }
+
+export const enum HowWeWorkTypes {
+  ANALYSIS = 'analysis',
+  INVENTORY = 'inventory',
+  CONCLUSION = 'conclusion'
+}
+
+export const enum WorkProcessTypes {
+  AIR = 'air',
+  WASTES = 'wastes',
+  WASTES_PASSPORTS = 'wastesPassports',
+  WEATHER_CONDITIONS = 'weatherConditions',
+  EMISSIONS_INVENTORY = 'emissionsInventory',
+  PEK = 'pek'
+}
